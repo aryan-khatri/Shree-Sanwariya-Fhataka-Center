@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sanwariya jii Fhataka Center - Quality Firecrackers in Ashta">
+    <!-- <link rel="icon" type="image/png" href="./Logo1.jpg"> -->
+    <link rel="icon" href="/favicon/web-app-manifest-512x512.png" type="image/png">
+
+
+
+    <title>Sanwariya jii Fhataka Center - Quality Firecrackers</title>
+    
+    <style>
+        /* ========================================
+           BASIC RESET & VARIABLES
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* EDIT COLORS HERE */
+            --color-primary: #C41E3A;      /* Deep festive red */
+            --color-secondary: #D4AF37;    /* Gold */
+            --color-dark: #2C2C2C;         /* Charcoal */
+            --color-light: #F5F5F5;        /* Light background */
+            --color-white: #FFFFFF;
+            --spacing: 1.5rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: var(--color-light);
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ========================================
+           SPARKLE BACKGROUND ANIMATION
+           ======================================== */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-secondary);
+            border-radius: 50%;
+            animation: sparkleFloat 3s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateY(-50px) scale(1);
+            }
+        }
+
+        /* ========================================
+           HEADER SECTION WITH ANIMATIONS
+           ======================================== */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #9B1628 100%);
+            color: var(--color-white);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            animation: headerPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-secondary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: titleFloat 3s infinite ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header .tagline {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .header .contact-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--color-secondary);
+            color: var(--color-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.6s both, pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+        }
+
+        .header .contact-number:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 6px 25px rgba(212,175,55,0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+            50% { box-shadow: 0 4px 25px rgba(212,175,55,0.8); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           MAIN CONTAINER
+           ======================================== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ========================================
+           SECTION STYLES WITH SCROLL ANIMATIONS
+           ======================================== */
+        .section {
+            background: var(--color-white);
+            margin: 1.5rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 25px rgba(196,30,58,0.2);
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 3px solid var(--color-secondary);
+            padding-bottom: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--color-primary);
+            animation: slideIn 1.5s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            to { left: 0; }
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* ========================================
+           CONTACT INFO
+           ======================================== */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+        }
+
+        .contact-item svg {
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover svg {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .copy-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .copy-btn:hover {
+            background-color: #9B1628;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background-color: #28a745;
+            animation: successPulse 0.5s ease;
+        }
+
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ========================================
+           SERVICES LIST WITH STAGGER ANIMATION
+           ======================================== */
+        .services-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .services-list li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--color-light);
+            border-left: 4px solid var(--color-secondary);
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.3s ease;
+        }
+
+        .services-list li.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .services-list li:hover {
+            background-color: #FFE9B1;
+            transform: translateX(10px);
+            border-left-width: 8px;
+        }
+
+        .services-list li strong {
+            color: var(--color-primary);
+        }
+
+        /* ========================================
+           NOTE BOX WITH ANIMATION
+           ======================================== */
+        .note-box {
+            background-color: #FFF9E6;
+            border: 2px solid var(--color-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-style: italic;
+            position: relative;
+            animation: wiggle 3s infinite ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-1deg); }
+            75% { transform: rotate(1deg); }
+        }
+
+        .note-box::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .footer .safety-note {
+            color: var(--color-secondary);
+            font-weight: bold;
+            margin-top: 1rem;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ========================================
+           CONFETTI EFFECT
+           ======================================== */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--color-secondary);
+            position: absolute;
+            animation: confettiFall 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sparkle Background Effect -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- ========================================
+         EDIT SHOP INFORMATION BELOW
+         Replace values inside {{double braces}}
+         ======================================== -->
+
+    <!-- HEADER SECTION -->
+    <header class="header">
+        <!-- EDIT: Shop name -->
+        <h1>SHREE SANWARIYA JII FHATAKA CENTER - QUALITY FIRECRACKERS</h1>
+        
+        <!-- EDIT: Tagline (optional) -->
+        <p class="tagline">Quality Firecrackers • Safe & Fast</p>
+        
+        <!-- EDIT: Contact number (also update in JavaScript section at bottom) -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
+            <a href="tel:7648981106" class="contact-number" id="callBtn">
+                <!-- Phone icon SVG -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>Call Us</span>
+            </a>
+            <a href="https://wa.me/917648981106" target="_blank" class="contact-number" id="whatsappBtn" style="background-color: #25D366;">
+                <!-- WhatsApp icon SVG -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                <span>WhatsApp</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="container">
+
+        <!-- ABOUT SECTION -->
+        <section class="section scroll-animate">
+            <h2>About Our Store</h2>
+            <!-- EDIT: About paragraph -->
+            <p>
+                Welcome to Sanwariya jii Fhataka Center, your one-stop destination for premium quality firecrackers!
+We are a trusted local shop known for our wide range of vibrant and safe firecrackers perfect for every celebration. Whether it’s a festival, wedding, or special occasion, we’re here to make your moments brighter and more joyful.
+
+Visit our store at Ashta Subhash Ground, near Bus Stand, or give us a call for quick assistance and special festive offers.
+At Sanwariya jii Fhataka Center, customer satisfaction and safety always come first!
+            </p>
+        </section>
+
+        <!-- CONTACT & LOCATION SECTION -->
+        <section class="section scroll-animate">
+            <h2>Contact & Location</h2>
+            
+            <div class="contact-info">
+                <!-- EDIT: Address -->
+                <div class="contact-item">
+                    <!-- Location icon SVG -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <div>
+                        <strong>Address:</strong><br>
+                        Ashta Subhash Ground near bus stand Ashta
+                    </div>
+                </div>
+
+                <!-- EDIT: Contact number -->
+                <div class="contact-item">
+                    <!-- Phone icon SVG -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    <div>
+                        <strong>Contact:</strong><br>
+                        <a href="tel:7648981106" style="color: #C41E3A; text-decoration: none;">7648981106</a>
+                        <br>
+                        <button class="copy-btn" onclick="copyPhoneNumber()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span id="copyBtnText">Copy Number</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- EDIT: Store hours (optional - can be removed if not needed) -->
+                <div class="contact-item">
+                    <!-- Clock icon SVG -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <div>
+                        <strong>Store Hours:</strong><br>
+                        8:00 AM — 10:00 PM
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDIT: Special note (optional) -->
+            <div class="note-box">
+                📢 <strong>Note:</strong> We deliver outside the college gate — special offers available
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section class="section scroll-animate">
+            <h2>Our Services</h2>
+            <!-- EDIT: Services list items below -->
+            <ul class="services-list" id="servicesList">
+                <li><strong>🎆 Wide Selection:</strong> Variety of firecrackers for all occasions</li>
+                <li><strong>🚚 Local Delivery:</strong> We deliver to nearby locations</li>
+                <li><strong>💰 Payment Options:</strong> Cash & Online payments accepted</li>
+                <li><strong>🎁 Special Offers:</strong> Bulk discounts and seasonal deals available</li>
+                <li><strong>✅ Quality Assured:</strong> Safe and certified products only</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <!-- EDIT: Shop name in copyright -->
+        <p>&copy; <span id="currentYear"></span> Sanwariya jii Fhataka Center. All rights reserved.</p>
+        
+        <!-- Auto-updated date (managed by JavaScript) -->
+        <p>Last Updated: <span id="lastUpdated"></span></p>
+        
+        <!-- EDIT: Safety note (optional) -->
+        <p class="safety-note">⚠️ Use firecrackers safely and responsibly. Follow all safety guidelines.</p>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT FUNCTIONALITY
+         ======================================== -->
+    <script>
+        // EDIT: Phone number for copy function (must match contact number above)
+        const PHONE_NUMBER = '7648981106';
+
+        // Auto-update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Auto-update "Last Updated" date
+        const lastUpdatedDate = new Date().toLocaleDateString('en-IN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('lastUpdated').textContent = lastUpdatedDate;
+
+        // ========================================
+        // SPARKLE BACKGROUND EFFECT
+        // ========================================
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            const sparkleCount = 20;
+
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
+
+        // ========================================
+        // SCROLL ANIMATION OBSERVER
+        // ========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate services list items with stagger
+                    if (entry.target.querySelector('#servicesList')) {
+                        const items = entry.target.querySelectorAll('.services-list li');
+                        items.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, index * 100);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections with scroll-animate class
+        document.querySelectorAll('.scroll-animate').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ========================================
+        // CONFETTI EFFECT ON CALL/WHATSAPP BUTTON CLICK
+        // ========================================
+        document.getElementById('callBtn').addEventListener('click', function(e) {
+            createConfetti(e.clientX, e.clientY);
+        });
+        
+        document.getElementById('whatsappBtn').addEventListener('click', function(e) {
+            createConfetti(e.clientX, e.clientY);
+        });
+
+        function createConfetti(x, y) {
+            const colors = ['#C41E3A', '#D4AF37', '#FF6B6B', '#FFD93D'];
+            const confettiCount = 20;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 50 + Math.random() * 50;
+                const xVel = Math.cos(angle) * velocity;
+                const yVel = Math.sin(angle) * velocity;
+                
+                confetti.style.setProperty('--x-vel', xVel + 'px');
+                confetti.style.setProperty('--y-vel', yVel + 'px');
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+
+        // ========================================
+        // COPY PHONE NUMBER FUNCTION
+        // ========================================
+        function copyPhoneNumber() {
+            const btn = document.querySelector('.copy-btn');
+            const btnText = document.getElementById('copyBtnText');
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(PHONE_NUMBER).then(function() {
+                // Show success feedback
+                btn.classList.add('copied');
+                btnText.textContent = '✓ Copied!';
+                
+                // Create mini confetti effect
+                const btnRect = btn.getBoundingClientRect();
+                createConfetti(btnRect.left + btnRect.width / 2, btnRect.top);
+                
+                // Reset button after 2 seconds
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btnText.textContent = 'Copy Number';
+                }, 2000);
+            }).catch(function(err) {
+                // Fallback for older browsers
+                alert('Phone number: ' + PHONE_NUMBER);
+            });
+        }
+
+        // ========================================
+        // INITIALIZE EFFECTS ON PAGE LOAD
+        // ========================================
+        window.addEventListener('DOMContentLoaded', function() {
+            createSparkles();
+        });
+    </script>
+
+</body>
+</html>
